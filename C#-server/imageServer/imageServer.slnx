@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="BLL/BLL.csproj" Id="8f6de5cc-c646-4da9-b935-29184645f702" />
+  <Project Path="DAL/DAL.csproj" Id="b44c55e6-8197-427f-99d9-ef05d690d2b7" />
+  <Project Path="imageServer/imageServer.csproj" />
+</Solution>

@@ -1,0 +1,55 @@
+<div class="auth-container">
+  <div class="auth-card">
+
+    <div class="auth-brand">
+      <span class="brand-mark">✦</span>
+      <span class="brand-name">Acuity</span>
+    </div>
+
+    <div class="auth-head">
+      <h2>ברוכים השבים</h2>
+      <p>התחברו לחשבון שלכם כדי להמשיך</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <label for="email">כתובת אימייל</label>
+        <input type="email" id="email" formControlName="email"
+               placeholder="example@mail.com" dir="ltr"
+               [class.input-error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+        @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+          <span class="field-error">אנא הכנסו כתובת אימייל תקינה</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">סיסמה</label>
+        <input type="password" id="password" formControlName="password"
+               placeholder="••••••••" dir="ltr"
+               [class.input-error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+        @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+          <span class="field-error">שדה סיסמה הוא חובה</span>
+        }
+      </div>
+
+      @if (serverError) {
+        <div class="server-msg server-msg-error">
+          <span class="msg-icon">✕</span>
+          <span class="msg-text">{{ serverError }}</span>
+          <button class="msg-close" type="button" (click)="serverError = null">✕</button>
+        </div>
+      }
+
+      <button type="submit" class="submit-btn" [disabled]="isLoading">
+        @if (isLoading) { <span class="btn-spinner"></span> }
+        {{ isLoading ? 'מתחברים...' : 'כניסה' }}
+      </button>
+    </form>
+
+    <p class="auth-switch">
+      עדיין לא נרשמתם?
+      <a routerLink="/register">הרשמה</a>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,174 @@
+<div class="processor-page">
+
+  <!-- רקע חי -->
+  <div class="atmo atmo-1"></div>
+  <div class="atmo atmo-2"></div>
+  <div class="atmo atmo-3"></div>
+  <div class="aurora-bg">
+    <div class="aurora-band band-1"></div>
+    <div class="aurora-band band-2"></div>
+    <div class="aurora-band band-3"></div>
+  </div>
+
+  <!-- כותרת -->
+  <header class="page-header">
+    <div class="header-left">
+      <span class="page-badge"><span class="badge-dot"></span>AI Enhancement Studio</span>
+      <h1 class="page-title">שדרוג <span class="gradient-text">תמונות</span></h1>
+    </div>
+    <p class="page-subtitle">העלו תמונה וקבלו תוצאה מקצועית תוך שניות</p>
+  </header>
+
+  <!-- כרטיסיות יכולות -->
+  <div class="features-head">
+    <h2 class="feat-heading">שלוש יכולות. <span class="feat-heading-glow">תוצאה אחת.</span></h2>
+  </div>
+
+  <div class="feat-grid">
+
+    <article class="feat-card">
+      <div class="feat-visual feat-v-upscale">
+        <div class="usc-left"><div class="usc-pixels"></div></div>
+        <div class="usc-divider"><div class="usc-handle"></div></div>
+        <div class="usc-right"></div>
+        <div class="usc-badge">4×</div>
+      </div>
+      <div class="feat-body">
+        <h3 class="feat-title">הגדלה פי 4</h3>
+        <p class="feat-desc"> תוך שמירה מלאה על פרטים, חדות וצבעים.</p>
+      </div>
+    </article>
+
+    <article class="feat-card feat-card-mid">
+      <div class="feat-visual feat-v-face">
+        <div class="face-glow"></div>
+        <div class="face-oval"></div>
+        <div class="face-ring fr-1"></div>
+        <div class="face-ring fr-2"></div>
+        <div class="face-ring fr-3"></div>
+        <div class="face-dot fdot-1"></div>
+        <div class="face-dot fdot-2"></div>
+        <div class="face-dot fdot-3"></div>
+        <div class="face-dot fdot-4"></div>
+        <div class="face-dot fdot-5"></div>
+        <div class="face-scan-line"></div>
+      </div>
+      <div class="feat-body">
+        <h3 class="feat-title">שיפור פנים</h3>
+        <p class="feat-desc"> מזהה ומחדד פרטים עדינים ברמה גבוהה</p>
+      </div>
+    </article>
+
+    <article class="feat-card">
+      <div class="feat-visual feat-v-bg">
+        <div class="bg-layer bg-sky"></div>
+        <div class="bg-layer bg-mid"></div>
+        <div class="bg-layer bg-ground"></div>
+        <div class="bg-subject"><div class="bg-subject-head"></div></div>
+        <div class="bg-detail bd-1"></div>
+        <div class="bg-detail bd-2"></div>
+        <div class="bg-detail bd-3"></div>
+        <div class="bg-detail bd-4"></div>
+        <div class="bg-detail bd-5"></div>
+      </div>
+      <div class="feat-body">
+        <h3 class="feat-title">שיפור כללי</h3>
+        <p class="feat-desc">  חידוד ושיפור של תמונות נוף ורקעים  </p>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- גריד שני כרטיסים -->
+  <div class="processor-grid">
+
+    <div class="card-wrapper">
+      <div class="card-top">
+        <div class="card-chip"><span class="chip-dot dot-cyan"></span>לפני</div>
+      </div>
+      <app-image-upload
+        [imageUrl]="originalImageUrl"
+        (fileSelected)="handleFileSelected($event)">
+      </app-image-upload>
+    </div>
+
+    <div class="cards-divider">
+      <div class="divider-line"></div>
+      <div class="divider-icon">✦</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="card-wrapper">
+      <div class="card-top">
+        <div class="card-chip"><span class="chip-dot dot-violet"></span>אחרי</div>
+      </div>
+      <app-image-result
+        [imageUrl]="enhancedImageUrl"
+        [originalImageUrl]="originalImageUrl"
+        [isLoading]="isLoading"
+        (openFullView)="openLightbox()">
+      </app-image-result>
+    </div>
+
+  </div>
+
+  <!-- שגיאה -->
+  @if (errorMessage) {
+    <div class="error-modal-overlay" (click)="closeErrorPopup()">
+      <div class="error-modal-content" (click)="$event.stopPropagation()">
+        <div class="error-icon">⚠️</div>
+        <h3>אופס, משהו השתבש</h3>
+        <p>{{ errorMessage }}</p>
+        <button class="close-error-btn" (click)="closeErrorPopup()">הבנו, תודה</button>
+      </div>
+    </div>
+  }
+
+</div>
+
+<!-- ══ לייטבוקס ברמת הדף — מחוץ ל-processor-page ══ -->
+@if (lightboxOpen && enhancedImageUrl && originalImageUrl) {
+  <div class="lb-overlay" (click)="closeLightbox()">
+    <div class="lb-box" (click)="$event.stopPropagation()">
+
+      <!-- כותרת -->
+      <div class="lb-header">
+        <div class="lb-labels">
+          <span class="lb-label lb-before">לפני</span>
+          <span class="lb-label lb-after">אחרי · שודרג</span>
+        </div>
+        <button class="lb-close" (click)="closeLightbox()" title="סגירה (ESC)">✕</button>
+      </div>
+
+      <!-- השוואה -->
+      <div class="lb-comparison">
+        <img [src]="originalImageUrl" class="lb-img lb-img-before" alt="לפני">
+        <img [src]="enhancedImageUrl" class="lb-img lb-img-after" alt="אחרי"
+             [style.clip-path]="'polygon(0 0, ' + lbSlider + '% 0, ' + lbSlider + '% 100%, 0 100%)'">
+
+        <div class="lb-divider" [style.left.%]="lbSlider">
+          <div class="lb-thumb">
+            <span class="lb-arrow lb-left"></span>
+            <span class="lb-arrow lb-right"></span>
+          </div>
+        </div>
+
+        <input type="range" min="0" max="100" [value]="lbSlider"
+               (input)="updateLbSlider($event)" class="lb-slider-input">
+      </div>
+
+      <!-- פוטר -->
+      <div class="lb-footer">
+        <a [href]="enhancedImageUrl" download="enhanced-image.jpg" class="lb-download">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          הורדת התמונה המשופרת
+        </a>
+      </div>
+
+    </div>
+  </div>
+}

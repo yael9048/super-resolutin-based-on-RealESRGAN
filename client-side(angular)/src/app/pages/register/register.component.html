@@ -1,0 +1,93 @@
+<div class="auth-container">
+  <div class="auth-card">
+
+    <div class="auth-brand">
+      <span class="brand-mark">✦</span>
+      <span class="brand-name">Acuity</span>
+    </div>
+
+    <div class="auth-head">
+      <h2>יצירת חשבון חדש</h2>
+      <p>הצטרפו אלינו כדי לשמור את היסטוריית התמונות שלכם</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <label for="username">שם מלא</label>
+        <input type="text" id="username" formControlName="username" placeholder="הכנסו שם מלא"
+               [class.input-error]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+        @if (registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
+          <span class="field-error">שם מלא הוא שדה חובה</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="email">כתובת אימייל</label>
+        <input type="email" id="email" formControlName="email"
+               placeholder="example@mail.com" dir="ltr"
+               [class.input-error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+        @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+          <span class="field-error">אנא הכנסו כתובת אימייל תקינה</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">סיסמה</label>
+        <div class="password-wrapper">
+          <input [type]="showPassword ? 'text' : 'password'" id="password"
+                 formControlName="password" placeholder="לפחות 6 תווים" dir="ltr"
+                 [class.input-error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+          <button type="button" class="eye-btn" (click)="togglePasswordVisibility()">
+            {{ showPassword ? '🙈' : '👁' }}
+          </button>
+        </div>
+        @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+          <span class="field-error">הסיסמה חייבת להכיל לפחות 6 תווים</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">אימות סיסמה</label>
+        <div class="password-wrapper">
+          <input [type]="showConfirmPassword ? 'text' : 'password'" id="confirmPassword"
+                 formControlName="confirmPassword" placeholder="הקלידו שוב" dir="ltr"
+                 [class.input-error]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
+          <button type="button" class="eye-btn" (click)="toggleConfirmPasswordVisibility()">
+            {{ showConfirmPassword ? '🙈' : '👁' }}
+          </button>
+        </div>
+        @if (registerForm.get('confirmPassword')?.hasError('required') && registerForm.get('confirmPassword')?.touched) {
+          <span class="field-error">שדה אימות סיסמה הוא חובה</span>
+        }
+        @if (registerForm.get('confirmPassword')?.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.touched) {
+          <span class="field-error">הסיסמאות אינן תואמות</span>
+        }
+      </div>
+
+      @if (serverError) {
+        <div class="server-msg server-msg-error">
+          <span class="msg-icon">✕</span>
+          <span class="msg-text">{{ serverError }}</span>
+          <button class="msg-close" type="button" (click)="serverError = null">✕</button>
+        </div>
+      }
+      @if (serverSuccess) {
+        <div class="server-msg server-msg-success">
+          <span class="msg-icon">✓</span>
+          <span class="msg-text">{{ serverSuccess }}</span>
+        </div>
+      }
+
+      <button type="submit" class="submit-btn" [disabled]="isLoading || !!serverSuccess">
+        @if (isLoading) { <span class="btn-spinner"></span> }
+        {{ isLoading ? 'יוצרים חשבון...' : 'הרשמה' }}
+      </button>
+    </form>
+
+    <p class="auth-switch">
+      כבר יש לכם חשבון?
+      <a routerLink="/login">כניסה לחשבון</a>
+    </p>
+  </div>
+</div>

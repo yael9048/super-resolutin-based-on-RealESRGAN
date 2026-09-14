@@ -1,0 +1,237 @@
+/* ============================================================
+   navbar.css — Acuity. Navigation Bar
+   Dark Luxury Design System
+   ============================================================ */
+
+/* ── Main Header ───────────────────────────────────────────── */
+.main-header {
+  width: 100%;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  background: rgba(4, 8, 22, 0.80);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-sizing: border-box;
+  direction: rtl;
+  transition: background 0.25s ease;
+}
+
+/* ── Layout Sections ───────────────────────────────────────── */
+.logo-section {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.center-nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.left-auth {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Logo ──*/
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.navbar-brand {
+  cursor: pointer;
+  display: flex;
+  align-items: baseline;
+  direction: ltr;
+  text-decoration: none;
+  gap: 0;
+}
+
+.logo-text {
+  font-family: 'Outfit', 'Heebo', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+
+  /* Gradient violet → cyan */
+  background: linear-gradient(135deg, #60a5fa 0%, #bfdbfe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.logo-dot {
+  /* Magenta dot */
+  font-family: 'Outfit', 'Heebo', sans-serif;
+  font-size: 1.9rem;
+  font-weight: 900;
+  line-height: 1;
+  background: #e11d48;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-right: 1px;
+}
+
+.nav-tag {
+  font-size: 0.5rem;
+  font-weight: 400;
+  letter-spacing: 4px;
+  color: rgba(255, 255, 255, 0.25);
+  text-transform: uppercase;
+  margin-top: -3px;
+  direction: ltr;
+}
+
+/* ── Nav Links ────*/
+.nav-link {
+  font-family: 'Heebo', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  cursor: pointer;
+  padding: 7px 16px;
+  border-radius: 999px;
+  transition: color 0.25s ease, background 0.25s ease;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: #f8fafc;
+  background: rgba(29, 78, 216, 0.12);
+}
+
+.nav-link.active {
+  color: #f8fafc;
+  background: rgba(29, 78, 216, 0.18);
+}
+
+/* ── Auth Area ─────────────────────────────────────────────── */
+.greeting-text {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.85rem;
+  padding-left: 14px;
+  margin-left: 8px;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.username-highlight {
+  /* Cyan username color */
+  color: #93c5fd;
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+/* Ghost login link */
+.auth-link {
+  font-family: 'Heebo', sans-serif;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  cursor: pointer;
+  padding: 7px 14px;
+  border-radius: 999px;
+  transition: all 0.25s ease;
+}
+
+.auth-link:hover {
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Gradient pill register button */
+.auth-link.register-btn {
+  background: linear-gradient(135deg, #1d4ed8, #e11d48);
+  color: #fff;
+  font-weight: 700;
+  padding: 8px 20px;
+  box-shadow: 0 4px 16px rgba(29, 78, 216, 0.3);
+}
+
+.auth-link.register-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(29, 78, 216, 0.45);
+  filter: brightness(1.1);
+}
+
+/* Switch button (ghost border) */
+.auth-link.switch-btn {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.auth-link.switch-btn:hover {
+  border-color: rgba(29, 78, 216, 0.4);
+  color: #f8fafc;
+  background: rgba(29, 78, 216, 0.08);
+}
+
+/* Logout — red */
+.auth-link.logout-btn {
+  color: #ef4444;
+}
+
+.auth-link.logout-btn:hover {
+  background: rgba(239, 68, 68, 0.10);
+  color: #f87171;
+}
+
+/* ── Mobile Responsive ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .main-header {
+    padding: 0 16px;
+    height: 60px;
+  }
+
+  .logo-text {
+    font-size: 1.2rem;
+    letter-spacing: 4px;
+  }
+
+  .logo-dot {
+    font-size: 1.5rem;
+  }
+
+  .nav-tag,
+  .greeting-text {
+    display: none;
+  }
+
+  .center-nav {
+    gap: 2px;
+  }
+
+  .nav-link {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+
+  .left-auth {
+    gap: 4px;
+  }
+
+  .auth-link {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+
+  .auth-link.register-btn {
+    padding: 6px 14px;
+  }
+}

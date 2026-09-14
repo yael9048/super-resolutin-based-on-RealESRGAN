@@ -1,0 +1,92 @@
+<div class="image-box">
+
+  <!--אם עדיין לא הועלתה תמונה -->
+  @if (!imageUrl && !isLoading) {
+    <span class="placeholder-text">התמונה המשופרת<br>תופיע כאן</span>
+  }
+
+  <!-- בזמן טעינה תופיע אנימציה -->
+  @if (isLoading && originalImageUrl) {
+    <div class="loading-wrapper fade-in">
+      <img [src]="originalImageUrl" class="blurry-bg" alt="">
+      <div class="scanner-overlay">
+        <div class="scanner-line"></div>
+        <div class="scan-corners">
+          <div class="corner corner-tl"></div>
+          <div class="corner corner-tr"></div>
+          <div class="corner corner-bl"></div>
+          <div class="corner corner-br"></div>
+        </div>
+      </div>
+      <div class="progress-ring-wrapper">
+        <svg class="progress-ring" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stop-color="#00e5ff"/>
+              <stop offset="100%" stop-color="#a855f7"/>
+            </linearGradient>
+          </defs>
+          <circle class="ring-track" cx="50" cy="50" r="40"/>
+          <circle class="ring-fill" cx="50" cy="50" r="40"
+                  stroke="url(#ringGrad)"
+                  [style.stroke-dashoffset]="dashOffset"/>
+        </svg>
+        <div class="progress-center">
+          <span class="progress-num">{{ progressDisplay }}</span>
+          <span class="progress-pct">%</span>
+          <span class="progress-label">מעבד</span>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- לאחר הטעינה יופיע סליידר לפני/אחרי -->
+  @if (imageUrl && !isLoading && originalImageUrl) {
+    <div class="comparison-container fade-in"
+         (click)="requestFullView()"
+         title="לחצו להגדלה">
+
+      <img [src]="originalImageUrl" class="img-original" alt="לפני">
+      <img [src]="imageUrl" class="img-enhanced" alt="אחרי"
+           [style.clip-path]="'polygon(0 0, ' + sliderPosition + '% 0, ' + sliderPosition + '% 100%, 0 100%)'">
+
+      <div class="slider-divider" [style.left.%]="sliderPosition">
+        <div class="slider-thumb">
+          <span class="arrow left"></span>
+          <span class="arrow right"></span>
+        </div>
+      </div>
+
+      <input type="range" min="0" max="100" [value]="sliderPosition"
+             (input)="updateSlider($event)" class="slider-input"
+             (click)="$event.stopPropagation()">
+
+      <!-- כפתור להגדלה של תמונת המקור-->
+      <div class="expand-hint">⤢</div>
+    </div>
+  }
+
+</div>
+
+<!-- כפתורי פעולה אחרי קבלת התמונה -->
+@if (imageUrl && !isLoading) {
+  <div class="result-actions fade-in">
+    <button class="action-btn btn-expand" (click)="requestFullView()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 3 21 3 21 9"></polyline>
+        <polyline points="9 21 3 21 3 15"></polyline>
+        <line x1="21" y1="3" x2="14" y2="10"></line>
+        <line x1="3" y1="21" x2="10" y2="14"></line>
+      </svg>
+      הצגה מלאה
+    </button>
+    <a [href]="imageUrl" download="enhanced-image.jpg" class="action-btn btn-download">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+      הורדת התמונה
+    </a>
+  </div>
+}

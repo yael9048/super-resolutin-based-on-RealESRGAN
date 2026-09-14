@@ -1,0 +1,312 @@
+/* ============================================================
+   styles.css — Acuity. Global Styles
+   Dark Luxury Design System
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Heebo:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ── CSS Variables ─────────────────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --bg-base:           #040816;
+  --bg-surface:        #070d20;
+  --bg-elevated:       #0d1530;
+  --bg-card:           rgba(255, 255, 255, 0.05);
+  --bg-card-hover:     rgba(255, 255, 255, 0.08);
+
+  /* Violet */
+  --violet:            #1d4ed8;
+  --violet-mid:        #2563eb;
+  --violet-light:      #60a5fa;
+  --violet-dim:        rgba(29, 78, 216, 0.15);
+  --violet-glow:       rgba(29, 78, 216, 0.25);
+
+  /* Cyan */
+  --cyan:              #3b82f6;
+  --cyan-mid:          #93c5fd;
+  --cyan-light:        #bfdbfe;
+  --cyan-dim:          rgba(59, 130, 246, 0.15);
+  --cyan-glow:         rgba(59, 130, 246, 0.25);
+
+  /* Magenta */
+  --magenta:           #e11d48;
+  --magenta-mid:       #fb7185;
+  --magenta-dim:       rgba(225, 29, 72, 0.15);
+  --magenta-glow:      rgba(225, 29, 72, 0.25);
+
+  /* Blue */
+  --blue:              #2563eb;
+  --blue-mid:          #3b82f6;
+
+  /* Text */
+  --text-primary:      #f8fafc;
+  --text-muted:        #94a3b8;
+  --text-dim:          #475569;
+
+  /* Error */
+  --error:             #ef4444;
+  --error-dim:         rgba(239, 68, 68, 0.15);
+  --error-glow:        rgba(239, 68, 68, 0.3);
+
+  /* Borders */
+  --border-subtle:     rgba(255, 255, 255, 0.06);
+  --border-card:       rgba(255, 255, 255, 0.10);
+  --border-violet:     rgba(29, 78, 216, 0.4);
+  --border-cyan:       rgba(59, 130, 246, 0.4);
+
+  /* Gradients */
+  --gradient-primary:  linear-gradient(135deg, #1d4ed8, #e11d48);
+  --gradient-hero:     linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%);
+  --gradient-magenta:  linear-gradient(135deg, #1d4ed8, #e11d48);
+  --gradient-text:     linear-gradient(135deg, #60a5fa, #bfdbfe);
+
+  /* Shadows */
+  --shadow-card:       0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-violet:     0 8px 32px rgba(29, 78, 216, 0.2);
+  --shadow-cyan:       0 8px 32px rgba(59, 130, 246, 0.2);
+
+  /* Sizing */
+  --navbar-height:     68px;
+  --radius-card:       16px;
+  --radius-btn:        10px;
+  --radius-input:      10px;
+  --radius-pill:       999px;
+
+  /* Typography */
+  --font-display:      'Outfit', 'Heebo', sans-serif;
+  --font-body:         'Heebo', 'Outfit', sans-serif;
+
+  /* Transitions */
+  --transition:        0.25s ease;
+  --transition-slow:   0.4s ease;
+}
+
+/* ── Reset & Base ──────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  direction: rtl;
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Aurora mesh background: 4 slow radial gradient orbs */
+  background-image:
+    radial-gradient(ellipse 80% 60% at 15% 20%,  rgba(29, 78, 216, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 50% at 85% 75%,  rgba(59, 130, 246, 0.10)  0%, transparent 60%),
+    radial-gradient(ellipse 60% 70% at 50% 50%,  rgba(225, 29, 72, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 90% 40% at 70% 10%,  rgba(37, 99, 235, 0.08)  0%, transparent 60%);
+  background-attachment: fixed;
+}
+
+/* ── Typography ────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+p {
+  line-height: 1.7;
+}
+
+a {
+  color: var(--violet-light);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: var(--cyan-light);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all var(--transition);
+}
+
+input,
+textarea,
+select {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(29, 78, 216, 0.4);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(29, 78, 216, 0.65);
+}
+
+/* ── Gradient Text Utility ─────────────────────────────────── */
+.gradient-text {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Global Download Button ────────────────────────────────── */
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: var(--gradient-primary);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: var(--radius-btn);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition);
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 20px rgba(29, 78, 216, 0.3);
+  text-decoration: none;
+}
+
+.download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(29, 78, 216, 0.45);
+  filter: brightness(1.1);
+  color: #fff;
+}
+
+.download-btn:active {
+  transform: translateY(0);
+}
+
+/* ── Glass Card Utility ────────────────────────────────────── */
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-card);
+}
+
+/* ── Badge Utility ─────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  background: rgba(29, 78, 216, 0.12);
+  border: 1px solid rgba(29, 78, 216, 0.3);
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--violet-light);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* ── Focus Ring ────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid rgba(29, 78, 216, 0.6);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Selection ─────────────────────────────────────────────── */
+::selection {
+  background: rgba(29, 78, 216, 0.35);
+  color: var(--text-primary);
+}
+
+/* ── Keyframe Animations ───────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes spinReverse {
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0deg); }
+}
+
+@keyframes floatUp {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes orb-drift {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  25%  { transform: translate(30px, -20px) scale(1.05); }
+  50%  { transform: translate(-20px, 30px) scale(0.95); }
+  75%  { transform: translate(20px, 20px) scale(1.02); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% center; }
+  50%       { background-position: 100% center; }
+}
+
+/* ── Responsive Base ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+}

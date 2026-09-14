@@ -1,0 +1,45 @@
+<div class="upload-wrapper">
+  <div class="image-box"
+       [class.dragging]="isDragging"
+       (dragover)="onDragOver($event)"
+       (dragenter)="onDragEnter($event)"
+       (dragleave)="onDragLeave($event)"
+       (drop)="onDrop($event)">
+
+    @if (!imageUrl) {
+      <label class="upload-label" (click)="triggerRipple($event)">
+
+        <div class="upload-icon-area">
+          <span class="upload-icon">↑</span>
+          <div class="icon-ring ring-a"></div>
+          <div class="icon-ring ring-b"></div>
+        </div>
+
+        <span class="upload-main-text">העלו תמונה</span>
+        <span class="upload-sub-text">
+          @if (isDragging) { שחררו כאן · }
+          @else { גררו לכאן או לחצו לבחירה · }
+          JPG, PNG
+        </span>
+
+        <input type="file" (change)="onFileChange($event)" accept="image/*" hidden>
+
+        @if (rippleActive) {
+          <span class="ripple-wave"
+                [style.left.px]="rippleX"
+                [style.top.px]="rippleY">
+          </span>
+        }
+      </label>
+    }
+
+    @else {
+      <img [src]="imageUrl" alt="תמונה מקורית">
+      <label class="reupload-btn">
+        החלפת תמונה
+        <input type="file" (change)="onFileChange($event)" accept="image/*" hidden>
+      </label>
+    }
+
+  </div>
+</div>

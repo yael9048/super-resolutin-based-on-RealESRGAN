@@ -1,0 +1,12 @@
+/* ============================================================
+   app.css — Acuity. App Shell
+   Dark Luxury Design System
+   ============================================================ */
+
+.site-wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: transparent;
+  position: relative;
+}

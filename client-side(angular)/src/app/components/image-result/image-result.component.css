@@ -1,0 +1,189 @@
+/* image-result.component.css */
+
+/* ── Image Box ── */
+.image-box {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: rgba(255,255,255,.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(255,255,255,.09);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 28px rgba(0,0,0,.4);
+  transition: border-color .25s, background .25s, box-shadow .25s;
+}
+
+.image-box:hover {
+  border-color: rgba(29,78,216,.45);
+  background: rgba(29,78,216,.05);
+  box-shadow: 0 4px 28px rgba(0,0,0,.4), inset 0 0 0 1px rgba(59,130,246,.18);
+}
+
+/* ── Placeholder ── */
+.placeholder-text {
+  color: #334155;
+  font-size: .82rem;
+  text-align: center;
+  line-height: 1.9;
+  padding: 20px;
+}
+
+/* ── Fade-in ── */
+.fade-in { animation: resultReveal .7s ease forwards; }
+@keyframes resultReveal {
+  from { opacity:0; filter:blur(4px); }
+  to   { opacity:1; filter:blur(0); }
+}
+
+/* ── Loading ── */
+.loading-wrapper {
+  position: absolute; inset: 0; z-index: 2;
+}
+.blurry-bg {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: blur(10px) brightness(.28) saturate(.25);
+}
+
+/* Scanner */
+.scanner-overlay { position: absolute; inset: 0; z-index: 3; }
+.scanner-line {
+  position: absolute;
+  top: 0; width: 2px; height: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(29,78,216,.6) 20%, #60a5fa 40%, #93c5fd 60%, rgba(59,130,246,.6) 80%, transparent);
+  box-shadow: 0 0 10px rgba(29,78,216,.5), 0 0 28px rgba(59,130,246,.3);
+  animation: scanMove 2.2s ease-in-out infinite alternate;
+}
+@keyframes scanMove {
+  0%   { left:0;               opacity:0; }
+  5%   { opacity:1; }
+  95%  { opacity:1; }
+  100% { left:calc(100% - 2px); opacity:0; }
+}
+.scan-corners { position:absolute; inset:14px; z-index:4; }
+.corner { position:absolute; width:20px; height:20px; border-style:solid; border-color:rgba(29,78,216,.55); opacity:.75; animation:cornerPulse 2s ease infinite; }
+@keyframes cornerPulse { 0%,100%{opacity:.75} 50%{opacity:.4} }
+.corner-tl { top:0;    right:0;  border-width:1.5px 0 0 1.5px; }
+.corner-tr { top:0;    left:0;   border-width:1.5px 1.5px 0 0; }
+.corner-bl { bottom:0; right:0;  border-width:0 0 1.5px 1.5px; }
+.corner-br { bottom:0; left:0;   border-width:0 1.5px 1.5px 0; }
+
+/* Progress Ring */
+.progress-ring-wrapper {
+  position: absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  z-index:5; width:100px; height:100px;
+  display:flex; align-items:center; justify-content:center;
+}
+.progress-ring { position:absolute; inset:0; width:100%; height:100%; transform:rotate(-90deg); overflow:visible; }
+.ring-track { fill:none; stroke:rgba(255,255,255,.06); stroke-width:5; }
+.ring-fill  { fill:none; stroke-width:5; stroke-linecap:round; stroke-dasharray:251.33; transition:stroke-dashoffset .35s ease; }
+.progress-center {
+  position:relative; z-index:6;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:rgba(4,8,22,.78); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  border-radius:50%; width:68px; height:68px;
+}
+.progress-num  { font-family:'Outfit',sans-serif; font-size:1.3rem; font-weight:700; color:#f8fafc; line-height:1; }
+.progress-pct  { font-size:.6rem; color:#64748b; margin-top:-1px; }
+.progress-label{ font-size:.52rem; color:#475569; letter-spacing:2px; text-transform:uppercase; margin-top:2px; }
+
+/* ── Comparison Slider ── */
+.comparison-container {
+  position:absolute; inset:0; width:100%; height:100%; cursor:zoom-in;
+}
+.img-original, .img-enhanced { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.slider-divider {
+  position:absolute; top:0; bottom:0; width:1.5px;
+  background:rgba(255,255,255,.80); box-shadow:0 0 6px rgba(255,255,255,.3);
+  transform:translateX(-50%); pointer-events:none; z-index:5;
+}
+.slider-thumb {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:36px; height:36px; background:#fff; border-radius:50%;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 7px; box-shadow:0 2px 14px rgba(0,0,0,.55);
+  box-sizing:border-box; z-index:6;
+}
+.arrow { border:solid #1e293b; border-width:0 1.5px 1.5px 0; display:inline-block; padding:3px; }
+.arrow.right { transform:rotate(-45deg); }
+.arrow.left  { transform:rotate(135deg); }
+.slider-input {
+  position:absolute; inset:0; width:100%; height:100%;
+  opacity:0; cursor:ew-resize; z-index:10; margin:0; direction:ltr;
+}
+
+/* Expand hint */
+.expand-hint {
+  position:absolute; top:10px; left:10px;
+  width:30px; height:30px;
+  background:rgba(4,8,22,.72); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.10); border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.8rem; color:#94a3b8; z-index:12;
+  opacity:0; transition:opacity .25s, background .25s;
+  cursor:pointer;
+}
+.comparison-container:hover .expand-hint { opacity:1; }
+.expand-hint:hover { background:rgba(29,78,216,.2); border-color:rgba(29,78,216,.4); color:#60a5fa; }
+
+/* ── Result Actions (below the card) ── */
+.result-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.action-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: .88rem;
+  font-weight: 700;
+  font-family: 'Heebo', sans-serif;
+  cursor: pointer;
+  transition: all .25s ease;
+  text-decoration: none;
+  border: none;
+  white-space: nowrap;
+}
+
+.action-btn svg { flex-shrink: 0; }
+
+.btn-expand {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  color: #94a3b8;
+}
+.btn-expand:hover {
+  background: rgba(255,255,255,.11);
+  border-color: rgba(255,255,255,.24);
+  color: #f8fafc;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,.3);
+}
+
+.btn-download {
+  background: linear-gradient(135deg, #1d4ed8, #7c3aed);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(37,99,235,.38);
+}
+.btn-download:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(124,58,237,.50);
+  filter: brightness(1.08);
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .result-actions { flex-direction: column; }
+  .action-btn { padding: 11px 14px; font-size: .82rem; }
+}

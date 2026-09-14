@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>שדרוג תמונות</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    body { margin: 0; background: #030918; }
+
+    /* ── Intro Slider ────────────────────────────────────────── */
+    #site-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    /* "BEFORE" half — dark pixelated overlay, starts covering the right half */
+    .sl-before {
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          rgba(255,255,255,.022) 0px, rgba(255,255,255,.022) 1px,
+          transparent 1px, transparent 9px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          rgba(255,255,255,.022) 0px, rgba(255,255,255,.022) 1px,
+          transparent 1px, transparent 9px
+        ),
+        linear-gradient(150deg, #050b1c 0%, #020710 45%, #07112a 100%);
+      background-size: 9px 9px, 9px 9px, 100% 100%;
+      clip-path: inset(0 0 0 50%);
+      will-change: clip-path;
+      transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    #site-loader.sweeping .sl-before {
+      clip-path: inset(0 0 0 100%);
+    }
+
+    /* Labels */
+    .sl-label {
+      position: absolute;
+      top: 22px;
+      font-family: 'Outfit', 'Segoe UI', system-ui, sans-serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+    .sl-label-before {
+      right: 22px;
+      color: rgba(148,163,184,.4);
+    }
+    .sl-label-after {
+      left: 22px;
+      color: rgba(59,130,246,.45);
+    }
+
+    /* Slider bar */
+    .sl-bar {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: calc(50% - 1px);
+      width: 2px;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(255,255,255,.55) 8%,
+        #ffffff 35%,
+        #93c5fd 50%,
+        #ffffff 65%,
+        rgba(255,255,255,.55) 92%,
+        transparent 100%
+      );
+      box-shadow:
+        0 0 10px rgba(255,255,255,.8),
+        0 0 28px rgba(59,130,246,.7);
+      will-change: left;
+      transition: left 1s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    #site-loader.sweeping .sl-bar {
+      left: calc(100% + 2px);
+    }
+
+    /* Handle circle */
+    .sl-handle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(3, 9, 24, 0.75);
+      border: 1.5px solid rgba(255,255,255,.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow:
+        0 0 18px rgba(59,130,246,.55),
+        0 0 5px rgba(255,255,255,.25);
+    }
+    .sl-arrow {
+      color: #ffffff;
+      font-size: 9px;
+      font-weight: 900;
+      line-height: 1;
+      opacity: .9;
+    }
+
+    /* Fade out */
+    #site-loader.done {
+      opacity: 0;
+      transition: opacity 0.38s ease;
+    }
+  </style>
+</head>
+<body>
+  <div id="site-loader">
+    <!-- "Before" dark overlay (right half) -->
+    <div class="sl-before"></div>
+
+    <!-- Labels -->
+    <div class="sl-label sl-label-before">BEFORE</div>
+    <div class="sl-label sl-label-after">ENHANCED</div>
+
+    <!-- Slider bar + handle -->
+    <div class="sl-bar">
+      <div class="sl-handle">
+        <span class="sl-arrow">◄</span>
+        <span class="sl-arrow">►</span>
+      </div>
+    </div>
+  </div>
+
+  <app-root></app-root>
+</body>
+</html>

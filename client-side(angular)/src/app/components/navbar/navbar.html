@@ -1,0 +1,30 @@
+<header class="main-header">
+  
+  <div class="logo-section">
+    <div class="logo-container">
+      <a class="navbar-brand" routerLink="/">
+        <span class="logo-text">Acuity</span><span class="logo-dot">.</span>
+      </a>
+      <span class="nav-tag">AI IMAGE ENHANCER</span>
+    </div>
+  </div>
+
+  <nav class="center-nav">
+    <a routerLink="/app" routerLinkActive="active" class="nav-link">שדרוג תמונה</a>
+    <a routerLink="/history" routerLinkActive="active" class="nav-link">היסטוריה</a>
+  </nav>
+
+  <div class="left-auth">
+    <span class="greeting-text">שלום ל<span class="username-highlight">{{ currentUsername }}</span></span>
+
+    @if (isLoggedIn) {
+      <a (click)="switchAccount()" class="auth-link switch-btn">החלף חשבון</a>
+      <a (click)="logout()" class="auth-link logout-btn">התנתקות</a>
+    } 
+    @else {
+      <a routerLink="/login" routerLinkActive="active" class="auth-link">כניסה</a>
+      <a routerLink="/register" routerLinkActive="active" class="auth-link register-btn">הרשמה</a>
+    }
+  </div>
+
+</header>

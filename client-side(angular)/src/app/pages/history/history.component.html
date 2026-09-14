@@ -1,0 +1,83 @@
+<div class="history-container">
+  <h2>היסטוריית התמונות שלי</h2>
+
+  @if (isGuest) {
+    <div class="guest-state-container">
+      <div class="guest-icon">🔒</div>
+      <h3>עדיין לא התחברת</h3>
+      <p>כדי לשמור ולצפות בהיסטוריית התמונות שעיבדת, אנא התחברי לחשבון שלך או צרי חשבון חדש.</p>
+      <div class="guest-actions">
+        <button class="login-action-btn" routerLink="/login">מעבר לעמוד התחברות</button>
+        <a routerLink="/register" class="register-link-text">עדיין אין לך חשבון? הרשמי כאן</a>
+      </div>
+    </div>
+  } 
+  @else {
+    @if (isLoading) { <div class="status-message">טוען...</div> }
+    @if (errorMessage) { <div class="error-message">{{ errorMessage }}</div> }
+    @if (!isLoading && !errorMessage && historyList.length === 0) {
+      <div class="empty-message">עדיין לא העלית תמונות.</div>
+    }
+
+    @if (!isLoading && historyList.length > 0) {
+      <div class="history-list">
+        @for (item of historyList; track item.imageId) {
+          <div class="history-card">
+            
+            <button class="delete-btn" (click)="deleteHistoryItem(item.imageId)" title="מחק תמונה">
+              הסר
+            </button>
+
+            <div class="details">
+              <p>
+                <strong>סטטוס: </strong> 
+                <span class="status-badge" [ngClass]="item.status.toLowerCase()">
+                  {{ item.status }}
+                </span>
+              </p>
+              <p><strong>תאריך העלאה:</strong> {{ item.uploadDate | date:'dd/MM/yyyy HH:mm' }}</p>
+              
+              <div class="images-preview">
+                <div class="img-box" (click)="openLightbox(item, 'original')">
+                  <span class="img-label">לפני</span>
+                  <img [src]="'https://localhost:7062/uploads/' + item.originalUrl" alt="מקור" class="history-image">
+                </div>
+
+                @if (item.status === 'Completed' && item.enhancedUrl) {
+                  <div class="img-box" (click)="openLightbox(item, 'enhanced')">
+                    <span class="img-label">אחרי</span>
+                    <img [src]="'https://localhost:7062/uploads/' + item.enhancedUrl" alt="משופר" class="history-image">
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>
+
+@if (selectedItem) {
+  <div class="lightbox-overlay" (click)="closeLightbox()">
+    <div class="lightbox-content" (click)="$event.stopPropagation()">
+      <button class="close-btn" (click)="closeLightbox()">&times;</button>
+      
+      @if (selectedImageType === 'enhanced') {
+        <button class="nav-arrow right-arrow" (click)="navigateLightbox('prev')">❯</button>
+      }
+
+      @if (selectedImageType === 'original' && selectedItem.status === 'Completed') {
+        <button class="nav-arrow left-arrow" (click)="navigateLightbox('next')">❮</button>
+      }
+
+      <img [src]="selectedImageUrl" [alt]="selectedFileName" class="lightbox-img-large">
+      
+      <div class="action-bar">
+        <button class="download-btn" (click)="downloadImage()">
+           הורד תמונה
+        </button>
+      </div>
+    </div>
+  </div>
+}

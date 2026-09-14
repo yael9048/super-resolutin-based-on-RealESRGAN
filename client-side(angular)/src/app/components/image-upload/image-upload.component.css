@@ -1,0 +1,192 @@
+/* image-upload.component.css */
+
+.upload-wrapper { position: relative; }
+
+/* ── Image Box ── */
+.image-box {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: rgba(255,255,255,.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px dashed rgba(29,78,216,.30);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 4px 28px rgba(0,0,0,.4);
+  transition: border-color .25s, background .25s, box-shadow .25s;
+}
+
+.upload-wrapper:hover .image-box {
+  border-style: solid;
+  border-color: rgba(29,78,216,.55);
+  background: rgba(29,78,216,.05);
+  box-shadow:
+    0 4px 28px rgba(0,0,0,.4),
+    inset 0 0 0 1px rgba(59,130,246,.18);
+}
+
+/* Dragging state */
+.image-box.dragging {
+  border-style: solid;
+  border-color: rgba(59,130,246,.85);
+  background: rgba(59,130,246,.10);
+  box-shadow:
+    0 0 0 4px rgba(59,130,246,.18),
+    0 4px 28px rgba(0,0,0,.4);
+}
+
+/* ── Upload Label ── */
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+  gap: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Upload Icon Area ── */
+.upload-icon-area {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.upload-icon {
+  font-size: 2rem;
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(135deg, #f8fafc, #fb7185);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 8px rgba(29,78,216,.35));
+  animation: iconFloat 3.2s ease-in-out infinite;
+  transition: font-size .35s cubic-bezier(.22,1,.36,1), filter .35s ease;
+}
+
+.upload-wrapper:hover .upload-icon,
+.image-box.dragging .upload-icon {
+  font-size: 3.4rem;
+  filter: drop-shadow(0 4px 16px rgba(59,130,246,.7));
+}
+
+@keyframes iconFloat {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-7px); }
+}
+
+/* Rings behind icon */
+.icon-ring {
+  position: absolute;
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.ring-a {
+  width: 54px; height: 54px;
+  border: 1px solid rgba(29,78,216,.25);
+  animation: ringExpand 2.8s ease-out infinite;
+}
+.ring-b {
+  width: 72px; height: 72px;
+  border: 1px solid rgba(59,130,246,.18);
+  animation: ringExpand 2.8s ease-out infinite .7s;
+}
+@keyframes ringExpand {
+  0%   { transform: translate(-50%,-50%) scale(.75); opacity:.7; }
+  100% { transform: translate(-50%,-50%) scale(1.4);  opacity:0; }
+}
+
+/* ── Ripple Wave ── */
+.ripple-wave {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(59,130,246,.28);
+  transform: translate(-50%,-50%) scale(0);
+  animation: rippleOut .75s ease-out forwards;
+  pointer-events: none;
+  z-index: 20;
+}
+@keyframes rippleOut {
+  to {
+    transform: translate(-50%,-50%) scale(50);
+    opacity: 0;
+  }
+}
+
+/* ── Text ── */
+.upload-main-text {
+  color: #94a3b8;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  transition: color .25s;
+  text-align: center;
+}
+.upload-wrapper:hover .upload-main-text { color: #f8fafc; }
+
+.upload-sub-text {
+  color: #475569;
+  font-size: .76rem;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ── Loaded Image ── */
+.image-box img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  border-radius: 14px;
+}
+
+/* ── Reupload Button ── */
+.reupload-btn {
+  position: absolute;
+  bottom: 12px; left: 50%;
+  transform: translateX(-50%);
+  background: rgba(4,8,22,.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #94a3b8;
+  padding: 7px 20px;
+  border-radius: 10px;
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,.10);
+  transition: all .25s;
+  white-space: nowrap;
+  font-family: 'Heebo', sans-serif;
+  z-index: 5;
+}
+.reupload-btn:hover {
+  background: rgba(29,78,216,.18);
+  border-color: rgba(29,78,216,.45);
+  color: #f8fafc;
+  transform: translateX(-50%) translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .upload-icon-area { width: 56px; height: 56px; margin-bottom: 14px; }
+  .upload-icon { font-size: 1.5rem; }
+  .upload-main-text { font-size: .9rem; }
+}
